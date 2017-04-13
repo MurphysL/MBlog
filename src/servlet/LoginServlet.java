@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * 用户登录Servlet
+ *  登录
  * Created by lenovo on 2017/4/9.
  */
 @WebServlet(name = "LoginServlet", value = "/servlet/LoginServlet")
@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
                     request.getRequestDispatcher("../jsp/view/fail.jsp").forward(request, response);
                 }else{
                     request.getSession().setAttribute("user", user);
-                    request.getRequestDispatcher("MainServlet").forward(request, response);
+                    response.sendRedirect("MainServlet?page=1");
                 }
             }
         } catch (SQLException | ClassNotFoundException e) {

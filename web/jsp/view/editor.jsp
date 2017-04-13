@@ -18,19 +18,9 @@
 <body>
 
 <%-- Nav--%>
-<div id="main">
-    <div class="inner">
-        <form action="../../servlet/CommitArticleServlet" method="post">
-            <input type="text" name="title" id="title" placeholder="文章标题">
-            <textarea name="article" id="article" placeholder="文章内容"></textarea>
-            <div id="article_buttom">
-                <input type="submit" value="发表" class="form_bt" />
-                <input type="reset" value="重置" class="form_bt" />
-            </div>
-        </form>
-    </div>
-</div>
+<%@include file="../weight/editor.jsp"%>
 
+<%-- Footer --%>
 <%@include file="../weight/footer.jsp"%>
 
 </body>

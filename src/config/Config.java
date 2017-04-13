@@ -7,4 +7,5 @@ package config;
 public class Config {
     public static final int USER_NOT_EXIST = 0x01;
     public static final int ADD_USER_FAIL = 0x02;
+    public static final int PAGE_BLOG_NUM = 4;
 }

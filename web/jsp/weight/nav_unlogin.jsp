@@ -8,11 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav>
     <div id="logo">
-        <a href="../../index.jsp" >MBlog</a>
+        <a href="#" >MBlog</a>
     </div>
     <ul>
-        <li><a href="#"></a></li>
-        <li><a href="#"></a></li>
         <li><a href="#" onclick="login()">登录</a></li>
         <li><a href="#" onclick="register()">注册</a></li>
     </ul>

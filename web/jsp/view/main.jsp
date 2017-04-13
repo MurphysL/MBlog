@@ -5,11 +5,10 @@
   Time: 20:20
   To change this template use File | Settings | File Templates.
 --%>
-<%-- 增加向下跳转 --%>
 <%@ page import="bean.Blog" %>
 <%@ page import="java.util.Random" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="blogs" class="bean.Blogs" scope="request"/>
+<jsp:useBean id="blogs" class="bean.Blogs" scope="session"/>
 <html>
 <head>
     <meta charset="utf-8">
@@ -30,33 +29,37 @@
     <!-- Content -->
     <div id="yq_content">
         <div id="yq_inner">
-            <%!
-                private int i = 0;
-            %>
             <%
-                for(Blog blog : blogs.getBlogs()){
-                    i ++;
-                    String title = blog.getTitle();
+                for(int i = 1 ;i <= 4 ;i ++){
                     String div_id = "yq_frg" + i;
                     String img_id = "f_img" + i;
                     String a_id = "f_title" + i;
                     String p_id = "f_des" + i;
-                    Random random = new Random();
-                    String main = blog.getArticle().substring(0, 20 + random.nextInt(10)) + "...";
+                    if(i-1 < blogs.getBlogs().size()){
+                        Blog blog = blogs.getBlogs().get(i-1);
+                        String title = blog.getTitle();
+                        Random random = new Random();
+                        String main = blog.getArticle().toCharArray().length >= 20?
+                                blog.getArticle().substring(0, 20 + random.nextInt(10)) + "..."
+                                :blog.getArticle();
             %>
-                    <div id=<%=div_id%>>
-                        <img src="../../img/pic1.jpg" id=<%=img_id%>>
-                        <a id=<%=a_id%> class="title" href="BlogServlet?blog_id=3<%=blog.getBlog_id()%>"><%=title%></a>
-                        <p id=<%=p_id%> class="des"><%=main%></p>
-                    </div>
+                        <div id=<%=div_id%>>
+                            <img src="../../img/pic1.jpg" id=<%=img_id%>>
+                            <a id=<%=a_id%> class="title" href="../../servlet/BlogServlet?blog_id=<%=blog.getBlog_id()%>"><%=title%></a>
+                            <p id=<%=p_id%> class="des"><%=main%></p>
+                        </div>
             <%
+                    }else{
+            %>
+                        <div id=<%=div_id%>></div>
+            <%
+                    }
                 }
-                i = 0;
             %>
         </div>
     </div>
-    <!-- Footer -->
-    <%@include file="../weight/footer.jsp"%>
+    <!-- Bar -->
+    <%@include file="../weight/bar.jsp"%>
 </div>
 
 </body>

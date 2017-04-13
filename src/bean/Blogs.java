@@ -7,18 +7,16 @@ import java.util.List;
  * Created by lenovo on 2017/4/12.
  */
 public class Blogs {
-    /**
-     * status : 1---正常 0--错误
-     */
-    private int status;
+
+    private int num;
     private List<Blog> blogs;
 
-    public int getStatus() {
-        return status;
+    public int getNum() {
+        return num;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setNum(int num) {
+        this.num = num;
     }
 
     public List<Blog> getBlogs() {

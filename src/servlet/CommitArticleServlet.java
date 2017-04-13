@@ -1,5 +1,6 @@
 package servlet;
 
+import bean.Blog;
 import bean.User;
 import dao.BlogDAO;
 
@@ -25,9 +26,11 @@ public class CommitArticleServlet extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
         String email = user.getEmail();
         try {
-            int rs = BlogDAO.addBlog(email, title, article);
+            int rs = BlogDAO.insertBlog(email, title, article);
             if(rs > 0){
-                request.getRequestDispatcher("../jsp/view/blog.jsp").forward(request, response);
+                Blog blog = BlogDAO.queryByEmailAndTitle(email, title);
+                request.getRequestDispatcher("BlogServlet?blog_id="+blog.getBlog_id())
+                        .forward(request, response);
             }else{
                 request.getRequestDispatcher("../jsp/fail.jsp").forward(request, response);
             }

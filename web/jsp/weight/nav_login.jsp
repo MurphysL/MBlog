@@ -8,12 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav>
     <div id="logo">
-        <a href="MainServlet" >MBlog</a>
+        <a href="../../servlet/MainServlet?page=1" >MBlog</a>
     </div>
     <div id="avatar">
-        <a href="../jsp/view/blog.jsp"><img src="../../img/pic1.jpg"></a>
+        <a href="../view/blog.jsp"><img src="../../img/pic1.jpg"></a>
     </div>
     <div id="new">
-        <a href="../jsp/view/editor.jsp"><img src="../../img/cancel.png"></a>
+        <a href="../view/editor.jsp"><img src="../../img/cancel.png"></a>
     </div>
 </nav>

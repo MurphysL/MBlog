@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * 注册 RegisterServlet
+ *  注册
  * Created by lenovo on 2017/4/9.
  */
 @WebServlet(name = "RegisterServlet", value = "/servlet/RegisterServlet")
@@ -33,7 +33,8 @@ public class RegisterServlet extends HttpServlet {
                     User user = UserDAO.query(email, password);
                     if(user != null){
                         request.getSession().setAttribute("user", user);
-                        request.getRequestDispatcher("GetBlogServlet").forward(request, response);
+                        request.setAttribute("page" , 1);
+                        request.getRequestDispatcher("MainServlet?page=1").forward(request, response);
                     }else{
                         MError error = new MError();
                         error.setMessage("RegisterServlet");
