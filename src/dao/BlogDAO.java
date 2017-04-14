@@ -94,6 +94,30 @@ public class BlogDAO {
     }
 
     /**
+     * 更新文章
+     * @param blog_id 文章主键
+     * @param title 文章标题
+     * @param article 文章
+     * @return 更新条数
+     * @throws SQLException SQLException
+     */
+    public static int updateBlogContent(int blog_id , String title, String article) throws SQLException {
+        String sql = "UPDATE blog SET title=? , article=? WHERE blog_id=?";
+        PreparedStatement ps = ConnUtil.getInstance().prepareStatement(sql);
+        ps.setString(1,title);
+        ps.setString(2,article);
+        ps.setInt(3,blog_id);
+        return ps.executeUpdate();
+    }
+
+    public static int updateBlogWatch(int blog_id) throws SQLException {
+        String sql = "UPDATE blog SET watch=watch+1 WHERE blog_id=?";
+        PreparedStatement ps = ConnUtil.getInstance().prepareStatement(sql);
+        ps.setInt(1,blog_id);
+        return ps.executeUpdate();
+    }
+
+    /**
      * 通过 Blog 主键查询 Blog
      * @param blog_id  Blog 主键
      * @return Blog

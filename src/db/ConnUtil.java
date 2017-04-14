@@ -17,6 +17,15 @@ public class ConnUtil {
 
     private static Connection conn = null;
 
+    static {
+        try {
+            loadConfig();
+            Class.forName(DRIVER);//加载数据库驱动
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 加载数据库配置
      */
@@ -29,18 +38,20 @@ public class ConnUtil {
             PASSWORD = prop.getProperty("jdbc.password");
             URL = prop.getProperty("jdbc.url");
             DRIVER = prop.getProperty("jdbc.driver");
-            System.out.print("COFIG:\nDRIVER:"+DRIVER+"\nURL:"+URL+"\nUSER:"+USER+"\nPASSWORD"+PASSWORD+"\n");
+            System.out.print("COFIG:" +
+                    "\nDRIVER:"+DRIVER+
+                    "\nURL:"+URL+
+                    "\nUSER:"+USER+
+                    "\nPASSWORD:"+PASSWORD+"\n");
         } catch (Exception e) {
             throw new RuntimeException("加载配置文件出错！",e);
         }
     }
 
-    public static Connection getInstance() throws ClassNotFoundException, SQLException {
+    public static Connection getInstance() throws SQLException {
         if(conn == null){
             synchronized (ConnUtil.class){
                 if(conn == null){
-                    loadConfig();
-                    Class.forName(DRIVER);//加载数据库驱动
                     conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 }
             }

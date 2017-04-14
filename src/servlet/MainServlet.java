@@ -73,7 +73,7 @@ public class MainServlet extends HttpServlet {
             }
             request.getSession().setAttribute("bar", sb.toString());
             request.getSession().setAttribute("blogs", blogs);
-            response.sendRedirect("../jsp/view/main.jsp");
+            response.sendRedirect("/jsp/view/main.jsp");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

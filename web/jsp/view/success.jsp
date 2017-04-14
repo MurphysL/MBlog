@@ -11,9 +11,9 @@
     <title>删除成功</title>
 </head>
 <body>
-<h1><%--<jsp:getProperty name="user" property="username"/>--%>删除成功</h1>
+<h1><%--<jsp:getProperty name="user" property="username"/>--%>成功</h1>
 <%
-    response.setHeader("refresh","2;URL=../../servlet/MainServlet?page=1");//位置错误
+    response.setHeader("refresh","2;URL=../../servlet/MainServlet?page=1");
 %>
 </body>
 </html>

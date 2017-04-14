@@ -1,6 +1,5 @@
 package servlet;
 
-import bean.Blog;
 import dao.BlogDAO;
 
 import javax.servlet.ServletException;
@@ -12,28 +11,29 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * 博客文章类
- * Created by lenovo on 2017/4/12.
+ * Blog 更新提交
+ * Created by lenovo on 2017/4/14.
  */
-@WebServlet(name = "BlogServlet",value = "/servlet/BlogServlet")
-public class BlogServlet extends HttpServlet {
+@WebServlet(name = "CommitUpdateServlet" , value="/servlet/CommitUpdateServlet")
+public class CommitUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        int blog_id = Integer.parseInt(request.getParameter("blog_id"));
+        String title = request.getParameter("title");
+        String article =request.getParameter("article");
+
         try {
-            int blog_id = Integer.parseInt(request.getParameter("blog_id"));
-            if(BlogDAO.updateBlogWatch(blog_id)>0){
-                Blog blog = BlogDAO.queryByBlogId(blog_id);
-                request.getSession().setAttribute("blog", blog);
-                response.sendRedirect("../jsp/view/blog.jsp");
+            if(BlogDAO.updateBlogContent(blog_id, title, article)!=0){
+                response.sendRedirect("../jsp/view/success.jsp");
             }else{
                 response.sendRedirect("../jsp/view/fail.jsp");
             }
-
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
+        doPost(request,response);
     }
 }

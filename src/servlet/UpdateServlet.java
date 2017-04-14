@@ -12,22 +12,17 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * 博客文章类
- * Created by lenovo on 2017/4/12.
+ * 文章编辑
+ * Created by lenovo on 2017/4/14.
  */
-@WebServlet(name = "BlogServlet",value = "/servlet/BlogServlet")
-public class BlogServlet extends HttpServlet {
+@WebServlet(name = "UpdateServlet",value = "/servlet/UpdateServlet")
+public class UpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int blog_id = Integer.parseInt(request.getParameter("blog_id"));
         try {
-            int blog_id = Integer.parseInt(request.getParameter("blog_id"));
-            if(BlogDAO.updateBlogWatch(blog_id)>0){
-                Blog blog = BlogDAO.queryByBlogId(blog_id);
-                request.getSession().setAttribute("blog", blog);
-                response.sendRedirect("../jsp/view/blog.jsp");
-            }else{
-                response.sendRedirect("../jsp/view/fail.jsp");
-            }
-
+            Blog blog = BlogDAO.queryByBlogId(blog_id);
+            request.getSession().setAttribute("editor_blog", blog);
+            response.sendRedirect("../jsp/view/update_editor.jsp");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

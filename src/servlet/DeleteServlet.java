@@ -21,9 +21,9 @@ public class DeleteServlet extends HttpServlet {
 
         try {
             if(BlogDAO.deleteByBlogId(blog_id) > 0){
-                response.sendRedirect("../jsp/view/success.jsp");
+                response.sendRedirect("/jsp/view/success.jsp");
             }else{
-                response.sendRedirect("../jsp/view/fail.jsp");
+                response.sendRedirect("/jsp/view/fail.jsp");
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

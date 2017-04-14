@@ -25,8 +25,8 @@
             <a href="../../servlet/MainServlet?page=1" >MBlog</a>
         </div>
         <ul>
-            <li><a href="../../servlet/DeleteServlet?blog_id=<%=blog.getBlog_id()%>" onclick="register()">删除</a></li>
-            <li><a href="#" onclick="login()">修改</a></li>
+            <li><a href="../../servlet/DeleteServlet?blog_id=<%=blog.getBlog_id()%>">删除</a></li>
+            <li><a href="../../servlet/UpdateServlet?blog_id=<%=blog.getBlog_id()%>">修改</a></li>
         </ul>
     </nav>
 </div>
