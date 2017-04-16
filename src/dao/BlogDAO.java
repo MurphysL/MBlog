@@ -57,6 +57,47 @@ public class BlogDAO {
         return num;
     }
 
+    public static int querySelfBlogNum(String email) throws SQLException {
+        String sql = "SELECT COUNT(blog_id) FROM blog WHERE email = ?";
+        PreparedStatement ps = ConnUtil.getInstance().prepareStatement(sql);
+        ps.setString(1,email);
+        ResultSet set = ps.executeQuery();
+        int num = 0;
+        while (set.next()){
+            num = set.getInt(1);
+        }
+        return num;
+    }
+
+    public static Blogs querySelfBlog(String email, int page) throws SQLException {
+        int start = (page-1)* Config.PAGE_BLOG_NUM;
+        int end = start+4;
+        String sql = "SELECT * FROM blog WHERE email=? ORDER BY watch DESC LIMIT ? , ?;";
+        PreparedStatement ps = ConnUtil.getInstance().prepareStatement(sql);
+        ps.setString(1, email);
+        ps.setInt(2, start);
+        ps.setInt(3, end);
+        ResultSet set = ps.executeQuery();
+
+        List<Blog> list = new ArrayList<>();
+        int num = 0;
+        while(set.next()){
+            Blog blog = new Blog();
+            blog.setBlog_id(set.getInt(1));
+            blog.setTitle(set.getString(2));
+            blog.setArticle(set.getString(3));
+            blog.setWatch(set.getInt(4));
+            blog.setTime(set.getLong(5));
+            blog.setEmail(set.getString(6));
+            list.add(blog);
+            num ++;
+        }
+        Blogs blogs = new Blogs();
+        blogs.setBlogs(list);
+        blogs.setNum(num);
+        return blogs;
+    }
+
     /**
      * 分页查询 Blog
      *

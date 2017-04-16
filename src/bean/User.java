@@ -10,6 +10,7 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private String avatar;
 
     public String getEmail() {
         return email;
@@ -43,6 +44,14 @@ public class User {
         this.password = password;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -50,6 +59,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", avatar='" + avatar + '\'' +
                 '}';
     }
 }

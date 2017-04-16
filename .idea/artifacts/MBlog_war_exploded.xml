@@ -33,6 +33,7 @@
           <element id="file-copy" path="$PROJECT_DIR$/../Tomcat/apache-tomcat-9.0.0.M17/lib/tomcat-util-scan.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/../Tomcat/apache-tomcat-9.0.0.M17/lib/tomcat-websocket.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/../Tomcat/apache-tomcat-9.0.0.M17/lib/catalina-storeconfig.jar" />
+          <element id="library" level="project" name="mysql-connector-java-5.1.21-bin" />
         </element>
       </element>
     </root>

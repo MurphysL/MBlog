@@ -1,6 +1,8 @@
 package servlet;
 
+import bean.ArticleNum;
 import bean.Blogs;
+import bean.User;
 import config.Config;
 import dao.BlogDAO;
 
@@ -13,21 +15,23 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * 博客查询类
- * session:blog--Blogs
- *         bar--String
+ * 当前用户文章
+ * session:self_blogs_num--ArticleNum
+ *         self_blogs--Blogs
  *
- * Created by lenovo on 2017/4/11.
+ * Created by lenovo on 2017/4/14.
  */
-@WebServlet(name = "MainServlet", value = "/servlet/MainServlet")
-public class MainServlet extends HttpServlet {
+@WebServlet(name = "SelfMainServlet",value = "/servlet/SelfMainServlet")
+public class SelfMainServlet extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        System.out.println("USER:\n"+request.getSession().getAttribute("user"));
-        int page = Integer.parseInt(request.getParameter("page"));
+        int page = Integer.parseInt( request.getParameter("page"));
+        User user = (User) request.getSession().getAttribute("user");
+        String email = user.getEmail();
         try {
-            Blogs blogs = BlogDAO.queryPagingBlog(page);
-            int num = BlogDAO.queryBlogNum();
+            Blogs blogs = BlogDAO.querySelfBlog(email , page);
+            int num = BlogDAO.querySelfBlogNum(email);
             int pages;
             StringBuilder sb = new StringBuilder();
             if(num % Config.PAGE_BLOG_NUM == 0){
@@ -58,7 +62,7 @@ public class MainServlet extends HttpServlet {
                     "\tborder-radius: 25px;";
             for(int i = 1 ;i <= pages ;i ++){
                 if(i == page){
-                    sb.append("<a href=../../servlet/MainServlet?page=")
+                    sb.append("<a href=../../servlet/SelfMainServlet?page=")
                             .append(i)
                             .append(" id=\"select\" style=\"")
                             .append(select_css)
@@ -66,7 +70,7 @@ public class MainServlet extends HttpServlet {
                             .append(i)
                             .append("</a>");
                 }else{
-                    sb.append("<a href=../../servlet/MainServlet?page=")
+                    sb.append("<a href=../../servlet/SelfMainServlet?page=")
                             .append(i)
                             .append(" id=\"select\" style=\"")
                             .append(unselect_css)
@@ -76,9 +80,12 @@ public class MainServlet extends HttpServlet {
                 }
             }
             request.getSession().setAttribute("bar", sb.toString());
-            request.getSession().setAttribute("blogs", blogs);
-            response.sendRedirect("/jsp/view/main.jsp");
-        } catch (SQLException | ClassNotFoundException e) {
+            ArticleNum articleNum = new ArticleNum();
+            articleNum.setNum(num);
+            request.getSession().setAttribute("self_blogs_num" , articleNum);
+            request.getSession().setAttribute("self_blogs", blogs);
+            response.sendRedirect("../jsp/view/self_main.jsp");
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

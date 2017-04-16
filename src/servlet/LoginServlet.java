@@ -1,8 +1,6 @@
 package servlet;
 
-import bean.MError;
 import bean.User;
-import config.Config;
 import dao.UserDAO;
 
 import javax.servlet.ServletException;
@@ -15,6 +13,8 @@ import java.sql.SQLException;
 
 /**
  *  登录
+ *  session : user---User
+ *
  * Created by lenovo on 2017/4/9.
  */
 @WebServlet(name = "LoginServlet", value = "/servlet/LoginServlet")
@@ -30,11 +30,7 @@ public class LoginServlet extends HttpServlet {
                 User user = UserDAO.query(email, password);
 
                 if(user == null){
-                    MError error = new MError();
-                    error.setCode(Config.USER_NOT_EXIST);
-                    error.setMessage("RegisterServlet");
-                    request.setAttribute("error",error);
-                    request.getRequestDispatcher("../jsp/view/fail.jsp").forward(request, response);
+                    response.sendRedirect("../view/fail.jsp");
                 }else{
                     request.getSession().setAttribute("user", user);
                     response.sendRedirect("MainServlet?page=1");

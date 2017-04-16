@@ -65,16 +65,20 @@
       <Position>4</Position>
       <DataType>varchar(30)|0</DataType>
     </column>
-    <index id="24" parent="12" name="email">
+    <column id="24" parent="12" name="avatar">
+      <Position>5</Position>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <index id="25" parent="12" name="email">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="25" parent="12" name="PRIMARY">
+    <key id="26" parent="12" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="26" parent="12" name="email">
+    <key id="27" parent="12" name="email">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>email</UnderlyingIndexName>
     </key>

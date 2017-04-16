@@ -1,4 +1,4 @@
-<%--
+<%@ page import="bean.User" %><%--
   Created by IntelliJ IDEA.
   User: lenovo
   Date: 2017/4/11
@@ -11,7 +11,9 @@
         <a href="../../servlet/MainServlet?page=1" >MBlog</a>
     </div>
     <div id="avatar">
-        <a href="../view/blog.jsp"><img src="../../img/pic1.jpg"></a>
+        <a href="../../servlet/SelfMainServlet?page=1">
+            <img src=<%=((User)request.getSession().getAttribute("user")).getAvatar()%>>
+        </a>
     </div>
     <div id="new">
         <a href="../view/editor.jsp"><img src="../../img/cancel.png"></a>

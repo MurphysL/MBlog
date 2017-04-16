@@ -1,8 +1,6 @@
 package servlet;
 
-import bean.MError;
 import bean.User;
-import config.Config;
 import dao.UserDAO;
 
 import javax.servlet.ServletException;
@@ -12,9 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Random;
 
 /**
  *  注册
+ *  session:user--User
+ *
  * Created by lenovo on 2017/4/9.
  */
 @WebServlet(name = "RegisterServlet", value = "/servlet/RegisterServlet")
@@ -25,29 +26,22 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
+        Random random = new Random();
+        String avatar = String.format("http://images.nowcoder.com/head/%dt.png", random.nextInt(1000));
 
         try {
             if(!"".equals(username) && !"".equals(password) && !"".equals(email)){
-                int rs = UserDAO.addUser(username , password , email);
+                int rs = UserDAO.insertUser(username , password , email, avatar);
                 if(rs > 0){
                     User user = UserDAO.query(email, password);
                     if(user != null){
                         request.getSession().setAttribute("user", user);
-                        request.setAttribute("page" , 1);
-                        request.getRequestDispatcher("MainServlet?page=1").forward(request, response);
+                        response.sendRedirect("MainServlet?page=1");
                     }else{
-                        MError error = new MError();
-                        error.setMessage("RegisterServlet");
-                        error.setCode(Config.USER_NOT_EXIST);
-                        request.setAttribute("error",error);
-                        request.getRequestDispatcher("../view/fail.jsp").forward(request, response);
+                        response.sendRedirect("../view/fail.jsp");
                     }
                 }else{
-                    MError error = new MError();
-                    error.setMessage("RegisterServlet");
-                    error.setCode(Config.ADD_USER_FAIL);
-                    request.setAttribute("error",error);
-                    request.getRequestDispatcher("../view/fail.jsp").forward(request, response);
+                    response.sendRedirect("../view/fail.jsp");
                 }
             }
         } catch (SQLException | ClassNotFoundException e) {

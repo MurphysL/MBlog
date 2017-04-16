@@ -35,35 +35,32 @@ public class UserDAO {
             user.setUsername(set.getString(2));
             user.setPassword(set.getString(3));
             user.setEmail(set.getString(4));
+            user.setAvatar(set.getString(5));
         }
         return user;
     }
 
-    public static List<User> queryAll() throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM user;";
-        PreparedStatement ps = ConnUtil.getInstance().prepareStatement(sql);
-        ResultSet set = ps.executeQuery();
-        List<User> list = new ArrayList<>();
-        while(set.next()){
-            User user = new User();
-            user.setUsername(set.getString(2));
-            user.setPassword(set.getString(3));
-            list.add(user);
-        }
-        return list;
-    }
-
-
-    public static int addUser(String username , String password, String email) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO user(username, password, email) VALUES(?,?,?);";
+    /**
+     * 添加用户
+     * @param username 用户名
+     * @param password 密码
+     * @param email 电子邮箱
+     * @param avatar 头像
+     * @return 影响行数
+     * @throws SQLException SQLException
+     * @throws ClassNotFoundException ClassNotFoundException
+     */
+    public static int insertUser(String username , String password, String email, String avatar) throws SQLException, ClassNotFoundException {
+        String sql = "INSERT INTO user(username, password, email, avatar) VALUES(?,?,?,?);";
         PreparedStatement ps = ConnUtil.getInstance().prepareStatement(sql);
         ps.setString(1, username);
         ps.setString(2, password);
         ps.setString(3, email);
+        ps.setString(4, avatar);
         return ps.executeUpdate();
     }
 
-    public static int update(User user) throws SQLException, ClassNotFoundException {
+   /* public static int update(User user) throws SQLException, ClassNotFoundException {
         String sql = "UPDATE user SET username='"+user.getUsername()+"',password='"+user.getPassword()
                 +"' WHERE username= '"+user.getUsername()+"';";
         System.out.print(sql);
@@ -75,5 +72,5 @@ public class UserDAO {
         String sql = "DELETE FROM user WHERE username = \""+username+"\";";
         PreparedStatement ps = ConnUtil.getInstance().prepareStatement(sql);
         return ps.executeUpdate();
-    }
+    }*/
 }
